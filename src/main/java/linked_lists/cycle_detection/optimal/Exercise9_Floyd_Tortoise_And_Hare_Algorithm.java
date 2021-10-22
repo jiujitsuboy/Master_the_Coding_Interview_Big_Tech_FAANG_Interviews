@@ -1,8 +1,5 @@
 package linked_lists.cycle_detection.optimal;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import linked_lists.NodeSingleLinkedList;
 
 /***
