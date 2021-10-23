@@ -15,15 +15,7 @@ public class Exervise11_Minimum_Brackets_To_Remove {
 
 	public static void main(String[] args) {
 		String text = "abcd((gh)";
-//		System.out.print(prueba(text));
 		System.out.println(validParenthesesString(text));
-	}
-
-	private static String prueba(String text) {
-
-		char[] letters = text.toCharArray();
-		letters[4] = (char) 0;
-		return new String(letters);
 	}
 
 	/***

@@ -17,7 +17,7 @@ public class Exercise9_Floyd_Tortoise_And_Hare_Algorithm {
 		NodeSingleLinkedList node1 = new NodeSingleLinkedList(1, node2);
 		node4.setNext(node1);
 
-		NodeSingleLinkedList cycleNode = findCycleNode(null);
+		NodeSingleLinkedList cycleNode = findCycleNode(node1);
 
 		System.out.println((cycleNode != null) ? cycleNode.getValue() : cycleNode);
 
