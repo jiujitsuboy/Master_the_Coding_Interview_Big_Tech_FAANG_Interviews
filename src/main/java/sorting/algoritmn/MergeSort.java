@@ -1,5 +1,6 @@
-package sorting;
+package sorting.algoritmn;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
 /**
@@ -14,22 +15,24 @@ import java.util.Arrays;
 public class MergeSort {
 
 	public static void main(String[] args) {
-		int arr[] = { 5, 9, 3, 2, 100, -10, -1 };
-//		int arr[] = { 3, 1, 6, 2 };
-//		int arr[] = null;
+//		Integer arr[] = { 5, 9, 3, 2, 100, -10, -1 };
+//		Integer arr[] = { 3, 1, 6, 2 };
+		String arr[] = { "b", "d", "a" };
+//		Integer arr[] = null;
 		System.out.println(Arrays.toString(sort(arr)));
 
 	}
 
 	/**
-	 * Time Complexity: O(n log n) Space Complexity: O(n)
+	 * Time Complexity: O(n log n) 
+	 * Space Complexity: O(n)
 	 * 
 	 * @param arr
 	 * @return
 	 */
-	private static int[] sort(int[] arr) {
+	public static <T extends Comparable<T>> T[] sort(T[] arr) {
 
-		int[] sorted = arr;
+		T[] sorted = arr;
 		if (arr != null) {
 			sorted = sortAux(arr, 0, arr.length - 1);
 		}
@@ -40,18 +43,22 @@ public class MergeSort {
 	/**
 	 * Split the array until form arrays of one element
 	 * 
-	 * Time Complexity: O(n) Space Complexity: O(n)
+	 * Time Complexity: O(n) 
+	 * Space Complexity: O(n)
 	 * 
 	 * @param arr
 	 * @param startIndex
 	 * @param endIndex
 	 * @return
 	 */
-	private static int[] sortAux(int[] arr, int startIndex, int endIndex) {
+	@SuppressWarnings("unchecked")
+	private static <T extends Comparable<T>> T[] sortAux(T[] arr, int startIndex, int endIndex) {
 
 //		System.out.println("pase: (" + startIndex + " - " + endIndex + ")");
 		if (startIndex == endIndex) {
-			int[] newArr = new int[] { arr[startIndex] };
+//			int[] newArr = new int[] { arr[startIndex] };
+			T[] newArr = (T[]) Array.newInstance(Comparable.class, 1);
+			newArr[0] = arr[startIndex];
 //			System.out.println(Arrays.toString(newArr));
 			return newArr;
 		}
@@ -64,18 +71,20 @@ public class MergeSort {
 	/**
 	 * Every pair of arrays are merged into an ordered array
 	 * 
-	 * Time Complexity: O(log n) Space Complexity: O(n)
+	 * Time Complexity: O(log n) 
+	 * Space Complexity: O(n)
 	 * 
 	 * @param subArrayLeft
 	 * @param subArrayRight
 	 * @return
 	 */
-	private static int[] mergeArrays(int[] subArrayLeft, int[] subArrayRight) {
+	@SuppressWarnings("unchecked")
+	private static <T extends Comparable<T>> T[] mergeArrays(T[] subArrayLeft, T[] subArrayRight) {
 
 		int indexLeft = 0;
 		int indexRight = 0;
 		int indexFinalArray = 0;
-		int[] finalArray = new int[subArrayLeft.length + subArrayRight.length];
+		T[] finalArray = (T[]) Array.newInstance(Comparable.class, subArrayLeft.length + subArrayRight.length);
 
 		while (indexLeft < subArrayLeft.length || indexRight < subArrayRight.length) {
 
@@ -83,7 +92,7 @@ public class MergeSort {
 				finalArray[indexFinalArray++] = subArrayRight[indexRight++];
 			} else if (indexRight == subArrayRight.length) {
 				finalArray[indexFinalArray++] = subArrayLeft[indexLeft++];
-			} else if (subArrayLeft[indexLeft] < subArrayRight[indexRight]) {
+			} else if (subArrayLeft[indexLeft].compareTo(subArrayRight[indexRight]) < 0) {
 				finalArray[indexFinalArray++] = subArrayLeft[indexLeft++];
 			} else {
 				finalArray[indexFinalArray++] = subArrayRight[indexRight++];
