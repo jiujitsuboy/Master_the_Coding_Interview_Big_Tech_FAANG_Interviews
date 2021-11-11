@@ -45,6 +45,7 @@ public class QuickSort {
 	/**
 	 * Time Complexity: O(n log n): For every split, we doing O(log n), but for
 	 * every half, we need to traverse all, so that give us O(n) 
+	 * 
 	 * Space Complexity: O(1): No additional structure dependent of the input used.
 	 * 
 	 * @param <T>

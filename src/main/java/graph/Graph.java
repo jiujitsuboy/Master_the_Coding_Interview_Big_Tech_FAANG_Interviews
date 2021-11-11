@@ -8,6 +8,13 @@ import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/**
+ * Implementation of a Graph Data Structure
+ * 
+ * @author Jose
+ *
+ * @param <T>
+ */
 public class Graph<T> {
 
 	private Map<GraphNode<T>, List<GraphNode<T>>> adjacentList;
