@@ -32,6 +32,4 @@ public class GraphNode<T> {
 	public String toString() {
 		return this.value.toString();
 	}
-	
-
 }

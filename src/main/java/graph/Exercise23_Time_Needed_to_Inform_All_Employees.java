@@ -67,15 +67,18 @@ public class Exercise23_Time_Needed_to_Inform_All_Employees {
 	}
 
 	/**
-	 * Calculate the longest time taken to inform the last employee in any subordanation branch.
+	 * Calculate the longest time taken to inform the last employee in any
+	 * subordanation branch.
 	 * 
-	 * Time Complexity: O(n) we call createCompanyTree,establishSubordination and calculateMaxTimeToInform, where each take O(n).
-	 * of employees
+	 * Time Complexity: O(n) we call createCompanyTree,establishSubordination and
+	 * calculateMaxTimeToInform, where each take O(n). of employees
 	 * 
-	 * Space Complexity: O(n):  we call createCompanyTree,establishSubordination and calculateMaxTimeToInform, where each take O(n).
-	 * @param numEmployee company number of employees
-	 * @param headId root manager
-	 * @param managers subordination list
+	 * Space Complexity: O(n): we call createCompanyTree,establishSubordination and
+	 * calculateMaxTimeToInform, where each take O(n).
+	 * 
+	 * @param numEmployee  company number of employees
+	 * @param headId       root manager
+	 * @param managers     subordination list
 	 * @param timeToInform time to inform each manager
 	 * @return total time to inform
 	 */
