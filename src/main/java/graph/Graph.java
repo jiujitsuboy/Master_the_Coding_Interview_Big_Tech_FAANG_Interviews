@@ -16,45 +16,60 @@ import java.util.stream.Collectors;
  * 
  * Graph can be:
  * 
- * 1-Undirected/Directed: which indicate the direction of navigation between
- * vertex connected by edges. 2-Weighted/UnWeighted: If the edge have some value
- * which indicated if preference or not between other edges. 3- Cyclic/Acyclic:
- * with cycles or not 4- Connected/UnConnected: two or more graph that are not
- * connect to each other.
+ * 1-Undirected/Directed: which indicate the direction of navigation between vertex connected by edges.
+ * 2-Weighted/UnWeighted: If the edge have some value which indicated if preference or not between other edges.
+ * 3- Cyclic/Acyclic: with cycles or not 
+ * 4- Connected/UnConnected: two or more graph that are not connect to each other.
  * 
- * A Binary tree is a directed, unweighed graph. A Matrix is a undirected,
- * unweighed, cyclic graph A LinkedList is also a directed, unweighed graph
+ * A Binary tree is a directed, unweighed graph.
+ * A Matrix is a undirected, unweighed, cyclic  graph
+ * A LinkedList is also a directed, unweighed graph
  * 
  * 
  * Graph Representation:
  * 
- * 1 5 \ / 0 - 3 - 4 / 2
+ * 		1       5			
+ *       \     /			
+ *    0 - 3 - 4					
+ *       /					
+ *      2
  * 
- * 1- Adjacent List: we have for each vertex it values follow by a list with all
- * the other vertex to which it has a edge.
+ * 1- Adjacent List: we have for each vertex it values follow by a list with all the other vertex to  
+ *                   which it has a edge.
  * 
- * 0 [3] 1 [3] 2 [3] 3 [0,1,2,4] => [[3],[3],[3],[0,1,2,4],[3,5],[4]] 4 [3,5] 0
- * 1 2 3 4 5 5 [4]
+ *    0 [3]
+ *    1 [3]
+ *    2 [3]	
+ *    3 [0,1,2,4] =>  [[3],[3],[3],[0,1,2,4],[3,5],[4]] 
+ *    4 [3,5]	          0   1   2      3       4    5
+ * 	  5 [4]
  * 
- * 2- Adjacent Matrix: Using a matrix of n*n where every vertex is on the X and
- * Y axis, each connection between vertex is represented with the cell that
- * connect the edge on the X and Y vertex with a value of 1.
+ * 2- Adjacent Matrix: Using a matrix of n*n where every vertex is on the X and Y axis, each connection 
+ *                     between vertex is represented with the cell that connect the edge on the X and Y 
+ *                     vertex with a value of 1.
  * 
- * 0 1 2 3 4 5 --------------------- 0 | 1 1 | 1 2 | 1 3 | 1 1 1 1 4 | 1 1 5 | 1
+ *  		0	1	2	3	4	5
+ *  		---------------------
+ * 		0 |	            1
+ * 		1 |             1
+ * 		2 |				1
+ * 		3 |	1	1	1		1
+ * 		4 |				1		1
+ * 		5 |					1
  * 
  * 
- * 3 -Edge List: Using an array or arrays, every position in the array is
- * another array that depict the connection between two edges.
+ * 3 -Edge List: Using an array or arrays, every position in the array is another array that depict the 
+ *               connection between two edges.
  * 
  * 
  * Traverse Graphs:
  * 
- * Bread First Search: Using a queue, we grab the first edge in the graph, add
- * to the queue, and then extract the edge get it's value, and grab every edge
- * it has and store in the queue the vertex of those edges. Continue doing the
- * same until the queue is empty.
+ * Bread First Search: Using a queue, we grab the first edge in the graph, add to the queue, and then extract 
+ * 					   the edge get it's value, and grab every edge it has and store in the queue the vertex 
+ * 					   of those edges. Continue doing the same until the queue is empty.
  * 
- * Depth First Search
+ * Depth First Search: Recursively we go from one node to every edged as deep as we can. So we traverse all the 
+ *                     path from one vertex to the final vertex he can communicate with
  * 
  * 
  * @author Jose
