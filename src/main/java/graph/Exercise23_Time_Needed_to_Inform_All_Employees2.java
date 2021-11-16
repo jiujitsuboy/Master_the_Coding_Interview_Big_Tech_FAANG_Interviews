@@ -114,7 +114,10 @@ public class Exercise23_Time_Needed_to_Inform_All_Employees2 {
 	 * length of employees
 	 * 
 	 * Space Complexity: O(n): we add every vertex to the array of edges of the
-	 * manager vertex, which at the end is the total number of employees
+	 * manager vertex, which at the end is the total number of employees, but
+	 * because a employee only can have one manager, we can´t end in a n*n sublist,
+	 * and that is why we only have n possible elements split into all the
+	 * sub arrays
 	 * 
 	 * @param companyEmployee
 	 * @param managers
@@ -189,11 +192,13 @@ public class Exercise23_Time_Needed_to_Inform_All_Employees2 {
 	 * Using BFS, we start with the headId vertex and scan all this edges and stored
 	 * them in a queue. Each time we take a vertex from the queue, we get it time to
 	 * inform and sum to the timeSoFar (which is only updated with the max time of a
-	 * whole level). So in contrast to DFS, we are calculating the max time per level as we goes down.
+	 * whole level). So in contrast to DFS, we are calculating the max time per
+	 * level as we goes down.
 	 * 
 	 * Time Complexity: O(n) we traverse all the graph
 	 * 
-	 * Space Complexity: O(n): We use a queue that in the worts case can have all the vertex in the graph (linked list)
+	 * Space Complexity: O(n): We use a queue that in the worts case can have all
+	 * the vertex in the graph (linked list)
 	 * 
 	 * @param companyEmployee
 	 * @param headId
