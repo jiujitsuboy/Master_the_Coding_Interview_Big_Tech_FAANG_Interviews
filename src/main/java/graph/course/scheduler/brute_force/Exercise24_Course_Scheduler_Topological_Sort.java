@@ -152,7 +152,7 @@ import java.util.stream.Stream;
  * @author Jose
  *
  */
-public class Exercise24_Course_Scheduler {
+public class Exercise24_Course_Scheduler_Topological_Sort {
 
 	public static void main(String[] args) {
 

@@ -31,7 +31,7 @@ import java.util.stream.Stream;
  *
  */
 
-public class Exercise24_Course_Scheduler_Topological_Sort {
+public class Exercise24_Course_Scheduler {
 
 	public static void main(String[] args) {
 
