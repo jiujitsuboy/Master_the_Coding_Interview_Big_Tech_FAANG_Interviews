@@ -108,7 +108,7 @@ public class Exercise25_Network_Time_Delay {
 	/**
 	 * Calculate the lowest path weigh that traverse all the graph (touch all the vertexes)
 	 * 
-	 * Time Complexity: O(n^2+t): createAdjacentListWithWeigths => O(n+t), getMinimumTimeFromStartNodeToAllNodes => O(n^2)
+	 * Time Complexity: O(n^n+t): createAdjacentListWithWeigths => O(n+t), getMinimumTimeFromStartNodeToAllNodes => O(n^n)
 	 * 
 	 * Space Complexity: O(n^2): createAdjacentListWithWeigths => O(n^2), getMinimumTimeFromStartNodeToAllNodes => O(1)
 	 * 
@@ -142,8 +142,9 @@ public class Exercise25_Network_Time_Delay {
 	 * traversed all the nodes in the graph(it discard those path that don´t touch
 	 * every vertex)
 	 * 
-	 * Time Complexity:O(n^2): for every vertex we iterate over his edges, which can
-	 * be n-1 edges
+	 * Time Complexity:O(n^n): for every vertex we iterate over his edges, which can
+	 * be n-1 edges, but each edge could have n-1 edges, so basically on each vertex
+	 * we have n-1 * n edges.
 	 * 
 	 * Space Complexity:O(1): we create 2 arrays of two position that don´t depend
 	 * from the input.

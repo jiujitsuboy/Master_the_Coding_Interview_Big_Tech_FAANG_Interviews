@@ -16,7 +16,7 @@ import java.util.List;
  * types, Min and Max.
  * 
  * Max Heap: Every parent node is greater than their children, so the root node
- * has the greates value of the tree. For a specific parent node, their children
+ * has the greatest value of the tree. For a specific parent node, their children
  * no should be the following greatest values in the tree.
  * 
  * 50 40 25 20 35 10 15
@@ -32,11 +32,14 @@ import java.util.List;
  * 
  * 
  * Heaps can be represented as nodes classes or as an array, but with arrays we
- * dont have the information of who's the parent and who's the children, so it
+ * don´t have the information of who's the parent and who's the children, so it
  * need a mathematical formula to find them:
  *
- * parent of a node = floor(nodes_index - 1)/2 right child = ((nodes_index * 1)
- * + 2) leftchild = ((nodes_index * 2) + 1)
+ *- parent of a node = floor(nodes_index - 1)/2
+ *
+ *- right child = ((nodes_index * 1)+ 2)
+ * 
+ *- left child = ((nodes_index * 2) + 1)
  * 
  * 
  * 
@@ -50,17 +53,31 @@ public class PriorityQueue<T extends Comparable<T>> {
 	private List<T> heap;
 	private Comparator<T> comparator;
 
+	public PriorityQueue() {
+		this(null, null);
+	}
+
 	public PriorityQueue(List<T> heap) {
 		this(heap, null);
 	}
 
+	public PriorityQueue(Comparator<T> comparator) {
+		this(null, comparator);
+	}
+
 	public PriorityQueue(List<T> heap, Comparator<T> comparator) {
 		if (comparator == null) {
+			// by default is a Min HEAP
 			this.comparator = (obj1, obj2) -> obj1.compareTo(obj2);
 		} else {
 			this.comparator = comparator;
 		}
-		this.heap = heap;
+
+		this.heap = new ArrayList<>();
+		if (heap != null && heap.size() > 0) {
+			this.heap.addAll(heap);
+		}
+
 		buildHeap();
 	}
 
@@ -107,7 +124,7 @@ public class PriorityQueue<T extends Comparable<T>> {
 	}
 
 	/**
-	 * Compare to position of the heap using the comparator set in the priority
+	 * Compare two position of the heap using the comparator set in the priority
 	 * queue. The comparator determine if this is a Max or Min heap
 	 * 
 	 * 
@@ -117,13 +134,13 @@ public class PriorityQueue<T extends Comparable<T>> {
 	 * @param index2
 	 * @return
 	 */
-	private boolean compare(int index1, int index2) {
-		boolean isEqualOrGreater = false;
+	private boolean isFirstValueGreaterThanSecond(int index1, int index2) {
+		boolean isGreater = false;
 		if (this.comparator.compare(heap.get(index1), heap.get(index2)) > 0) {
-			isEqualOrGreater = true;
+			isGreater = true;
 		}
 
-		return isEqualOrGreater;
+		return isGreater;
 	}
 
 	/**
@@ -144,7 +161,7 @@ public class PriorityQueue<T extends Comparable<T>> {
 	}
 
 	/**
-	 * taking a list, and converted into a min heap by applying siftDown at the last
+	 * taking a list, and converted into a heap by applying siftDown at the last
 	 * parent and then repeating the process to every element behind the last parent
 	 * of the list. We use SiftDown, instead SiftUp, because SiftDown offer better
 	 * performance because the majority of the elements are at the bottom of the
@@ -165,7 +182,7 @@ public class PriorityQueue<T extends Comparable<T>> {
 	 * 
 	 */
 	public void buildHeap() {
-		if (heap.size() > 0) {
+		if (heap.size() > 1) {
 			int indexParent = getParentIndex(heap.size() - 1);
 			for (int index = indexParent; index >= 0; index--) {
 				siftDown(index);
@@ -180,7 +197,7 @@ public class PriorityQueue<T extends Comparable<T>> {
 	 * 
 	 * Complexity
 	 * 
-	 * Time: O(log(n))=> in very step we only traverse half of the nodes (taking his
+	 * Time: O(log(n))=> in every step we only traverse half of the nodes (taking his
 	 * parents)
 	 * 
 	 * Space 0(1)=> no additional structure used related to the input
@@ -191,11 +208,12 @@ public class PriorityQueue<T extends Comparable<T>> {
 	public void siftUp(int currIndex) {
 		int indexParent = getParentIndex(currIndex);
 
-		while (isIndexInRange(indexParent) && !this.compare(currIndex, indexParent)) {
+		while (indexParent != currIndex && isIndexInRange(indexParent) && !this.isFirstValueGreaterThanSecond(currIndex, indexParent)) {
 			swap(currIndex, indexParent);
 			currIndex = indexParent;
 			indexParent = getParentIndex(currIndex);
 		}
+
 	}
 
 	/**
@@ -220,13 +238,13 @@ public class PriorityQueue<T extends Comparable<T>> {
 
 		while (isIndexInRange(indexFirstChild)) {
 
-			if (isIndexInRange(indexSecondChild) && !this.compare(indexSecondChild, indexFirstChild)) {
+			if (isIndexInRange(indexSecondChild) && !this.isFirstValueGreaterThanSecond(indexSecondChild, indexFirstChild)) {
 				indexSwap = indexSecondChild;
 			} else {
 				indexSwap = indexFirstChild;
 			}
 
-			if (this.compare(currIndex, indexSwap)) {
+			if (this.isFirstValueGreaterThanSecond(currIndex, indexSwap)) {
 				swap(currIndex, indexSwap);
 				currIndex = indexSwap;
 				indexFirstChild = getFirstChildIndex(currIndex);
@@ -286,18 +304,23 @@ public class PriorityQueue<T extends Comparable<T>> {
 	public static void main(String[] args) {
 		List<Integer> numbers = new ArrayList<Integer>();
 		numbers.add(31);
-//		numbers.add(17);
-//		numbers.add(12);
-//		numbers.add(18);
-//		numbers.add(9);
-//		numbers.add(44);
-//		numbers.add(102);
-//		numbers.add(30);
-//		numbers.add(23);
+		numbers.add(17);
+		numbers.add(12);
+		numbers.add(18);
+		numbers.add(9);
+		numbers.add(44);
+		numbers.add(102);
+		numbers.add(30);
+		numbers.add(23);
 
 		PriorityQueue<Integer> minHeap = new PriorityQueue<Integer>(numbers);
 		System.out.println(minHeap);
 		System.out.println(minHeap.remove());
 		System.out.println(minHeap.remove());
+
+		PriorityQueue<Integer> maxHeap = new PriorityQueue<Integer>(numbers, (obj1, obj2) -> obj2.compareTo(obj1));
+		System.out.println(maxHeap);
+		System.out.println(maxHeap.remove());
+		System.out.println(maxHeap.remove());
 	}
 }
