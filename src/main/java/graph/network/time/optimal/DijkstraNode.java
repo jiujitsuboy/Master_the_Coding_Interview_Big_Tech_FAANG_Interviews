@@ -2,6 +2,7 @@ package graph.network.time.optimal;
 
 public class DijkstraNode implements Comparable<DijkstraNode> {
 	private int name;
+	//Weight
 	private Integer value;
 
 	public DijkstraNode(int name) {

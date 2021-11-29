@@ -67,13 +67,15 @@ import java.util.stream.IntStream;
  * the time taken would be 5+2+4+1 = 12
  * 
  * 
- * 
+ * THIS APPROACH BUILDS THE STATE SPACE TREE (a tree which every branch depict 
+ * a possible path to the answer) OF THE GRAPH TO TAKE THE LESS EXPENSIVE PATH.
  * 
  * @author Jose
  *
  */
 public class Exercise25_Network_Time_Delay {
 
+	static int numtimes=0;
 	public static void main(String[] args) {
 		int numNodes = 5;
 		int startingPoint = 1;
@@ -108,9 +110,9 @@ public class Exercise25_Network_Time_Delay {
 	/**
 	 * Calculate the lowest path weigh that traverse all the graph (touch all the vertexes)
 	 * 
-	 * Time Complexity: O(n^n+t): createAdjacentListWithWeigths => O(n+t), getMinimumTimeFromStartNodeToAllNodes => O(n^n)
+	 * Time Complexity: O(n+v+t): createAdjacentListWithWeigths => O(n+t), getMinimumTimeFromStartNodeToAllNodes => O(n+v)
 	 * 
-	 * Space Complexity: O(n^2): createAdjacentListWithWeigths => O(n^2), getMinimumTimeFromStartNodeToAllNodes => O(1)
+	 * Space Complexity: O(n+t): createAdjacentListWithWeigths => O(n+t), getMinimumTimeFromStartNodeToAllNodes => O(1)
 	 * 
 	 * @param numNodes      Total number of vertex in the graph
 	 * @param startingPoint Node from where we are going to try to traverse the
@@ -142,9 +144,9 @@ public class Exercise25_Network_Time_Delay {
 	 * traversed all the nodes in the graph(it discard those path that don´t touch
 	 * every vertex)
 	 * 
-	 * Time Complexity:O(n^n): for every vertex we iterate over his edges, which can
-	 * be n-1 edges, but each edge could have n-1 edges, so basically on each vertex
-	 * we have n-1 * n edges.
+	 * Time Complexity:O(n+v): for every vertex we iterate over his edges, which can
+	 * be n-1 edges, but this edges are unique to the vertex, so that is why we sum
+	 * and not multiply.
 	 * 
 	 * Space Complexity:O(1): we create 2 arrays of two position that don´t depend
 	 * from the input.
@@ -165,7 +167,7 @@ public class Exercise25_Network_Time_Delay {
 	 */
 	private static int[] getMinimumTimeFromStartNodeToAllNodes(List<List<List<Integer>>> adjacentListWithWeigth,
 			Set<Integer> visitedVertex, int startingPoint, int numNodes, int[] timeSoFarAndVertexVisited) {
-
+		System.out.println(++numtimes);
 		int[] minValueEdges = { Integer.MAX_VALUE, timeSoFarAndVertexVisited[1] };
 		int[] tempTimeSoFarAndVertexVisited = new int[2];
 
@@ -201,9 +203,9 @@ public class Exercise25_Network_Time_Delay {
 	 * Time Complexity:O(n+t): iterate from zero to numNodes(n) and through all the
 	 * rows of times(t).
 	 * 
-	 * Space Complexity: O(n^2): A list of numNodes(n) positions, on each position
-	 * we going to have another list, which can have n-1 elements, and each element
-	 * could have 3 possible values O(n^2 + 3)
+	 * Space Complexity: O(n+t): We create a list with numNodes(n) positions, on each position
+	 * we going to have another list, which can have n-1 elements (the edges defined 
+	 * in times array), and each element could have 3 possible values O(n^2 + 3)
 	 * 
 	 * @param numNodes number of vertex on the graph
 	 * @param times    edges composed of source node, target node and the weight of
@@ -214,8 +216,10 @@ public class Exercise25_Network_Time_Delay {
 
 		List<List<List<Integer>>> adjacentListWithWeigths = new ArrayList<List<List<Integer>>>(numNodes);
 
+		//O(n)
 		IntStream.range(0, numNodes).forEach(matrix -> adjacentListWithWeigths.add(new ArrayList<List<Integer>>()));
 
+		//O(t)
 		for (int index = 0; index < times.length; index++) {
 			if (times[index].length > 0) {
 				List<List<Integer>> vertexMatrix = adjacentListWithWeigths.get(times[index][0] - 1);

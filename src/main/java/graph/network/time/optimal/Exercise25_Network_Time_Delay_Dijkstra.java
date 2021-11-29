@@ -9,17 +9,33 @@ import java.util.stream.IntStream;
 import heaps.PriorityQueue;
 
 /**
+ * GREEDY ALGORITHM, is used to answer optimization problems (min/max answers) and
+ * it is behavior is at every step try to take the greedy option (min or max).
+ * But not always doing this drive us to the correct answer. here is where Dynamic
+ * programming helps solving this, because to be completely sure of the answer, we
+ * need to explore all the possible answers to take the correct min or max value.
+ * Greedy tries at each step to take the min or the max respectively,  but not 
+ * always this brings to the correct answer, so DYNAMIC PROGRAMMING allows us to
+ * build the STATE SPACE TREE (all the possible paths to the answer, which takes
+ * a lot of time to create) but reduce the amount of time to build it by recording
+ * (MEMOIZATION) the steps we go through, so we don´t need to redo the same operation
+ * multiple times, instead, we can grab the pre-calculate value every time when need it
+ * 
+ * 
  * Given n networks nodes labeled for 1 to N and given a time array, which every
  * value is an array represented one edge (source node to target node plus the
  * weight of that edge, which represent time). Return the minimum time to send a
  * signal from a node K to all the other nodes. If it is not possible to reach
  * all nodes, return -1.
  * 
- * OPTIMAL APPROACH: Use Dijkstra algorithm to calculate the lowest cost path 
- *                   to all nodes and then get the maximum value obtained among
- *                   all the node and that is the answer. 
+ * OPTIMAL APPROACH: Use Dijkstra (Greedy algorithm) to calculate the lowest 
+ *                   cost path to all nodes and then get the maximum value 
+ *                   obtained among all the node and that is the answer. 
  *                   
- *                   This algorithm only works with positive weights
+ *                   This algorithm only works with positive weights. Depending
+ *                   of the implementation is could work or not. for example in
+ *                   the case the algorithm allows to put multiple times the same
+ *                   vertex in the Set, we could end with infinite loops.
  * 
  * Constraints
  * 
@@ -152,7 +168,7 @@ import heaps.PriorityQueue;
  * 			    2| 4/  1| 3  \  \ 
  * 				 V /    V     \ |
  * 				(4)--->(5)    (3) 
- *                  6      7
+ *                  6      
  * 
  * k = 1
  * 
@@ -179,10 +195,10 @@ public class Exercise25_Network_Time_Delay_Dijkstra {
 
 	public static void main(String[] args) {		
 		
-		int numNodes = 5;
-		int startingPoint = 1;
-		int[][] times = { { 1, 2, 9 }, { 1, 4, 2 }, { 2, 5, 1 }, { 4, 2, 4 }, { 4, 5, 6 }, { 3, 2, 3 }, { 5, 3, 7 },
-				{ 3, 1, 5 } };
+//		int numNodes = 5;
+//		int startingPoint = 1;
+//		int[][] times = { { 1, 2, 9 }, { 1, 4, 2 }, { 2, 5, 1 }, { 4, 2, 4 }, { 4, 5, 6 }, { 3, 2, 3 }, { 5, 3, 7 },
+//				{ 3, 1, 5 } };
 
 //		int numNodes = 5;
 //		int startingPoint = 1;
@@ -201,7 +217,22 @@ public class Exercise25_Network_Time_Delay_Dijkstra {
 		
 
 		
-//		int numNodes = 1; int startingPoint = 1; int[][] times = null;
+		int numNodes = 1; int startingPoint = 1; int[][] times = null;
+		
+//		int numNodes = 4;
+//		int startingPoint = 1;
+//		int[][] times = { { 1, 2, 2 }, { 1, 3, 3 }, { 3, 4, 4 }, { 4, 2, -6 }
+//		};
+		
+//		Infinite loop is we dont use a set rather a list
+//		int numNodes = 4;
+//		int startingPoint = 1;
+//		int[][] times = { { 1, 2, 2 }, { 1, 3, 3 }, { 3, 4, 4 }, { 4, 2, -6 },{ 4, 1, -9 }
+//		};
+		
+//		int numNodes = 5;
+//		int startingPoint = 1;
+//		int[][] times = { { 1, 2, 10 }, { 1, 4, 30 }, { 1, 5, 100 }, { 2, 3, 50 },{ 3, 5, 10 },{ 4, 3, 20 },{ 4, 5, 60 }};
 		
 
 		System.out.println(String.format("Minumun time from %d to all other vertex: %d", startingPoint,
@@ -215,7 +246,7 @@ public class Exercise25_Network_Time_Delay_Dijkstra {
 	 * Time Complexity: O(n+t * log n): createAdjacentListWithWeigths => O(n+t),
 	 * calculateDijstraforVertexK => O(n+t * log n)
 	 * 
-	 * Space Complexity: O(n^2): createAdjacentListWithWeigths => O(n^2),
+	 * Space Complexity: O(n): createAdjacentListWithWeigths => O(n),
 	 * calculateDijstraforVertexK => O(n)
 	 * 
 	 * @param numNodes      Total number of vertex in the graph
@@ -226,12 +257,12 @@ public class Exercise25_Network_Time_Delay_Dijkstra {
 	 */
 	private static int calculateMinimumTimeFromStartNodeToAllNodes(int numNodes, int startingPoint, int[][] times) {
 
-		int minTime = -1;
+		int minTime = 0;
 
 		if (times != null && startingPoint > -1 && startingPoint <= numNodes) {
 			List<List<List<Integer>>> adjacentListWithWeigth = createAdjacentListWithWeigths(numNodes, times);
 
-			minTime = calculateDijstraforVertexK2(numNodes, startingPoint, adjacentListWithWeigth);
+//			minTime = calculateDijstraforVertexK2(numNodes, startingPoint, adjacentListWithWeigth);
 			System.out.println((minTime == Integer.MAX_VALUE) ? -1 : minTime);
 			minTime = calculateDijstraforVertexK(numNodes, startingPoint, adjacentListWithWeigth);
 		}
@@ -372,9 +403,11 @@ public class Exercise25_Network_Time_Delay_Dijkstra {
 	 * Time Complexity:O(n+t): iterate from zero to numNodes(n) and through all the
 	 * rows of times(t).
 	 * 
-	 * Space Complexity: O(n^2): A list of numNodes(n) positions, on each position
-	 * we going to have another list, which can have n-1 elements, and each element
-	 * could have 3 possible values O(n^2 + 3)
+	 * Space Complexity: O(n): A list of numNodes(n) positions, on each position
+	 * we going to have another list, which can have n-1 elements but this elements
+	 * are only for this vertex, so at the end, the n-1 will be the total elements 
+	 * in the times matrix, so this will be constant and can be omitted, and each 
+	 * element could have 3 possible values O(n^2 + 3)
 	 * 
 	 * @param numNodes number of vertex on the graph
 	 * @param times    edges composed of source node, target node and the weight of
